@@ -1,0 +1,22 @@
+name: TableCheck checks
+on:
+  pull_request:
+  push:
+    branches: [main, feat/tablecheck]
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python scripts/lint.py
+      - run: python -m unittest discover -v
+      - run: python scripts/build.py
