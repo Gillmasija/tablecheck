@@ -17,7 +17,7 @@ section{margin:20px 0;scroll-margin-top:20px}.section-head{display:flex;justify-
 table{width:100%;border-collapse:collapse;font-size:.9rem}caption{text-align:left;color:#486158;margin-bottom:14px}th{text-align:left;background:#f1f5f0}th,td{padding:12px;border-bottom:1px solid #e1e7e2;overflow-wrap:anywhere}th[scope=row]{background:white;font-weight:600;max-width:320px}
 progress{display:block;width:100%;max-width:130px;height:7px;accent-color:#ad4e16}summary{cursor:pointer;font-weight:600}details p,details ul{max-width:760px}.muted{color:#486158;font-size:.88rem}.notice{border-left:4px solid #ad4e16;padding:12px 16px;background:#fff5e9;border-radius:4px}
 code{font-size:.86em;background:#edf2ed;padding:2px 5px;border-radius:4px}footer{font-size:.8rem;color:#486158}
-@media(max-width:640px){header{align-items:flex-start;flex-direction:column}header,main,footer{padding:18px}.metrics{grid-template-columns:repeat(2,1fr);gap:10px}.metric,section{padding:16px}.section-head{align-items:flex-start;flex-direction:column}th,td{padding:8px}}
+@media(max-width:640px){header{align-items:flex-start;flex-direction:column}header,main,footer{padding:18px}.metrics{grid-template-columns:repeat(2,1fr);gap:10px}.metric,section{padding:16px}.section-head{align-items:flex-start;flex-direction:column}th,td{padding:8px}table{min-width:400px}th[scope=col]{overflow-wrap:normal}}
 @media print{body{background:white;color:black}header,main,footer{max-width:none;padding:10px}nav{display:none}.metric,section{border-color:#aaa;box-shadow:none}tr,.metric{break-inside:avoid}.table-wrap{overflow:visible}a{color:black}}
 """
 
@@ -44,7 +44,7 @@ def html_report(report):
     status = "Needs review" if report["issue_count"] else "No findings"
     empty = '<p class="notice">Header only: no data records to assess. Add records and run again.</p>' if not report["rows"] else ""
     findings_section = (
-        '<div class="table-wrap"><table><caption>Record numbers include the header. Multiline cells count as one record.</caption>'
+        '<div class="table-wrap" tabindex="0" role="region" aria-label="Findings table, scroll horizontally on small screens"><table><caption>Record numbers include the header. Multiline cells count as one record.</caption>'
         '<thead><tr><th scope="col">Record</th><th scope="col">Column</th><th scope="col">Finding / next step</th></tr></thead>'
         f'<tbody>{findings}</tbody></table></div>' if findings else
         '<p>No issues were found by the configured checks. This does not establish that the data is correct.</p>')
@@ -65,7 +65,7 @@ def html_report(report):
 <span class="badge">{status} · Offline report · v{report["report_version"]}</span>{empty}
 <div class="metrics" aria-label="Audit summary">{metrics}</div>
 <section id="profiles"><div class="section-head"><h2>Column health</h2><span class="muted">Blank after trimming = missing</span></div>
-<div class="table-wrap"><table><caption>Distinct counts exclude blank cells and compare exact source text.</caption>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Column table, scroll horizontally on small screens"><table><caption>Distinct counts exclude blank cells and compare exact source text.</caption>
 <thead><tr><th scope="col">Column</th><th scope="col">Distinct</th><th scope="col">Missing</th><th scope="col">Missing share</th></tr></thead>
 <tbody>{profiles}</tbody></table></div></section>
 <section id="findings"><div class="section-head"><h2>Review queue</h2><span class="badge">{len(report["issues"])} of {report["issue_count"]} findings shown</span></div>
