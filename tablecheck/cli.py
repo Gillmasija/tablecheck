@@ -5,6 +5,7 @@ import sys
 
 from . import __version__
 from .audit import audit
+from .html_report import html_report
 from .reader import InputError, read_csv
 from .reports import json_report, write_report
 from .schema import apply_schema, load_schema
@@ -32,7 +33,8 @@ def main(argv=None):
     parser.add_argument("--version", action="version", version=f"TableCheck {__version__}")
     parser.add_argument("csv", help="CSV input (comma-separated, header required)")
     parser.add_argument("--schema", help="Optional JSON column rules")
-    parser.add_argument("--output", help="Write a JSON report to a new file (never overwrites)")
+    parser.add_argument("--output", help="Write a report to a new file (never overwrites)")
+    parser.add_argument("--format", choices=("json", "html"), default="json", help="Output format (default: json)")
     args = parser.parse_args(argv)
     try:
         headers, rows = read_csv(args.csv)
@@ -40,7 +42,7 @@ def main(argv=None):
         if args.schema:
             apply_schema(report, headers, rows, load_schema(args.schema, headers))
         if args.output:
-            write_report(args.output, json_report(report))
+            write_report(args.output, html_report(report) if args.format == "html" else json_report(report))
         print(summary(report))
         return 1 if report["issue_count"] else 0
     except (InputError, OSError) as exc:
