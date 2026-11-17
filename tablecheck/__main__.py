@@ -1,5 +1,5 @@
 """Command-line entry point."""
 
-from . import __version__
+from .cli import main
 
-print(f"TableCheck {__version__}")
+raise SystemExit(main())
