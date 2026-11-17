@@ -1,0 +1,7 @@
+{
+  "columns": {
+    "learner_id": {"required": true},
+    "completion": {"required": true, "type": "number", "min": 0, "max": 100},
+    "cohort": {"allowed": ["November", "December"]}
+  }
+}

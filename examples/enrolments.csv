@@ -1,0 +1,9 @@
+learner_id,course,completion,cohort
+L001,Python foundations,100,November
+L002,Data storytelling,75,November
+L003,Python foundations,,November
+L004,Data storytelling,112,November
+L002,Data storytelling,75,November
+L005,Web foundations,NaN,November
+L006,Web foundations,50,Unknown
+L007,Python foundations,0,November

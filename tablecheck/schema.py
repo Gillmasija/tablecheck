@@ -1,6 +1,7 @@
 """Explicit column rules; no guessed types or silent coercion."""
 
 import json
+import re
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
@@ -9,6 +10,8 @@ from .reader import InputError
 
 
 def number(value):
+    if not re.fullmatch(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?", str(value).strip()):
+        return None
     try:
         result = Decimal(str(value))
         if result.is_finite():
@@ -18,13 +21,22 @@ def number(value):
     return None
 
 
+def unique_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise InputError("Schema has duplicate JSON keys.")
+        result[key] = value
+    return result
+
+
 def load_schema(path, headers):
     with Path(path).open("rb") as source:
         raw = source.read(65_537)
     if len(raw) > 65_536:
         raise InputError("Schema exceeds the 64 KiB limit.")
     try:
-        schema = json.loads(raw.decode("utf-8-sig"))
+        schema = json.loads(raw.decode("utf-8-sig"), object_pairs_hook=unique_keys)
     except (ValueError, UnicodeError, RecursionError) as exc:
         raise InputError("Schema must be valid UTF-8 JSON.") from exc
     validate_schema(schema, headers)
