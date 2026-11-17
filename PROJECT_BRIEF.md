@@ -21,16 +21,16 @@ multiline quoted fields). No raw values in reports by default.
 
 ## Acceptance checklist
 
-- [ ] Read UTF-8/BOM files with quoted commas/newlines, reject malformed rows.
-- [ ] Show row/column counts, missingness, distinct counts and duplicate records.
-- [ ] Validate required, number, min/max and allowed-value schema rules.
-- [ ] Report actionable record/column locations without exposing cell contents.
-- [ ] Produce readable terminal, versioned JSON and offline HTML reports.
-- [ ] HTML is responsive, keyboard usable, printable and safely escapes text.
-- [ ] Exit 0 for clean, 1 for findings, 2 for input/config/output errors.
-- [ ] Never modify input files; refuse overwrite of report files by default.
-- [ ] Clear errors for empty, invalid UTF-8, missing files and invalid schemas.
-- [ ] Synthetic demo, usage guide, automated tests, lint, build and CI pass.
+- [x] Read UTF-8/BOM files with quoted commas/newlines, reject malformed rows.
+- [x] Show row/column counts, missingness, distinct counts and duplicate records.
+- [x] Validate required, number, min/max and allowed-value schema rules.
+- [x] Report actionable record/column locations without exposing cell contents.
+- [x] Produce readable terminal, versioned JSON and offline HTML reports.
+- [x] HTML is responsive, keyboard usable, printable and safely escapes text.
+- [x] Exit 0 for clean, 1 for findings, 2 for input/config/output errors.
+- [x] Never modify input files; refuse overwrite of report files by default.
+- [x] Clear errors for empty, invalid UTF-8, missing files and invalid schemas.
+- [x] Synthetic demo, usage guide, automated tests, lint, build and CI pass.
 
 ## Milestones and limitations
 
