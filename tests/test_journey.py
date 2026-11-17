@@ -6,11 +6,11 @@ from unittest.mock import patch
 
 from tablecheck.reader import InputError, read_csv
 from tablecheck.schema import load_schema
-from tests.test_cli import CliTests
+from tests import test_cli
 
 
 class JourneyTests(unittest.TestCase):
-    run_cli = CliTests.run_cli
+    run_cli = test_cli.CliTests.run_cli
 
     def test_synthetic_journey_and_source_protection(self):
         source = Path("examples/enrolments.csv")
